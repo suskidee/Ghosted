@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.11"
 services:
   db:
     image: mysql
@@ -11,7 +11,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${ROOT_PASSWORD}
     container_name: ghosted_db
 
-  api:
+  backend:
     build: .
     ports:
       - "8200:8200"
