@@ -1,21 +1,19 @@
+version: "3.8"
 services:
-  db:
-    image: mysql
-
-    environment:
-      MYSQL_DATABASE: ${NAME}
-      MYSQL_ROOT_PASSWORD: ${PASSWORD}
-      MYSQL_USER: ${USER}
-      MYSQL_PASSWORD: ${PASSWORD}
-    volumes:
-    - ./data/mysql/db:/var/lib/mysql
-
   backend:
     build: .
     ports:
-      - "8200:8200"
+      - "8220:8220"
     depends_on:
-      - db
-    container_name: ghosted_app
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8200"
+      - dbase
+    container_name: ghosted_backend
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8220"
+  dbase:
+    image: mysql
+
+    environment:
+      MYSQL_DATABASE: 'ghosted_db'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+    volumes:
+    - ./data/mysql/dbase:/var/lib/mysql
 
